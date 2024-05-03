@@ -1,19 +1,10 @@
 function setup() {
   createCanvas(1000, 800);
 }
-<<<<<<< HEAD
-/* 
-let startImg = document.createElement("img");
-image.src = "images/Startscreen.png";
-document.body.appendChild(image); */
-// let container = document.getElementById("image-container");
-// container.appendChild(startImg);
-=======
 
 function preload() {
-  startImg = loadImage("images/Startscreen.png");
+  startImg = loadImage("images/startscreenn.png");
 }
->>>>>>> 9828c57eaba903b61d8cc8a439e293607b6de3dc
 
 let state = "start";
 let gameIsRunning = false;
