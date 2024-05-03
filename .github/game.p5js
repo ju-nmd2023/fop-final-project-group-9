@@ -1,0 +1,12 @@
+[
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Checklist from canvas\n\n- Work on GitHub (create your repository hereLinks to an external site.)\n- Publish your finished project with GitHub Pages\n- You must have multiple commits to pass and every team member should have more or less evenly commits\n- You must show the progress of your game development on GitHub through commits\n- You must use JavaScript, HTML and CSS\n- You must use OOP, that means you should have at least one class in your project\n- You should use the canvas element and p5.js\n\n\nPlanning document (please check the corresponding deadline on Canvas)\nTrailer (max. 1 minute)\nSource code committed on GitHub\nThe git history shows a constant progress throughout the development time, that means multiple meaningful commits over multiple weeks\nYou filled out and uploaded the AI evaluation form\nYour working project published with GitHub Pages\nYour code should have a good structure, should be clean, and following the best practices you learned. Use comments where appropriate. The project uses an object-oriented approach to programming throughout the project and follows best practices.\n\nYou present your project, and you pass the code interview.\n\nIf you are unsure about the scope, please ask Garrit."
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## What do we need?\n- Start screen\n- Game screen\n- Lose screen\n- Win screen\n\n### Elements\n- Character should move with arrow keys, watch snake game\n- HI life should be in constant movement\n- Timer, counting down\n- Obsticles, watch flappy game\n\n### Buttons\n- Start button\nWhen start button is clicked, we switch to game screen- use event listener, click\n- Restart button, works the same\n"
+  }
+]
