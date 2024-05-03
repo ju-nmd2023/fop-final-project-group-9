@@ -31,3 +31,6 @@ function draw() {
     loseScreen();
   } else if (state === "win") winScreen();
 }
+
+
+function draw ();
