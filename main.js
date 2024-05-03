@@ -2,10 +2,10 @@ function setup() {
   createCanvas(1000, 800);
   background(230, 210, 200);
 }
-
+/* 
 let startImg = document.createElement("img");
 image.src = "images/Startscreen.png";
-document.body.appendChild(image);
+document.body.appendChild(image); */
 // let container = document.getElementById("image-container");
 // container.appendChild(startImg);
 
