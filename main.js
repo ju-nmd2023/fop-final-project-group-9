@@ -1,19 +1,17 @@
 function setup() {
   createCanvas(1000, 800);
-  background(230, 210, 200);
 }
 
-let startImg = document.createElement("img");
-image.src = "images/Startscreen.png";
-document.body.appendChild(image);
-// let container = document.getElementById("image-container");
-// container.appendChild(startImg);
+function preload() {
+  startImg = loadImage("images/Startscreen.png");
+}
 
 let state = "start";
 let gameIsRunning = false;
 
 function startScreen() {
   if (state === "start") {
+    image(startImg, 0, 0);
   }
 }
 
@@ -34,6 +32,7 @@ function winScreen() {
 
 function draw() {
   if (state === "start") {
+    image(startImg, 0, 0);
     startScreen();
   } else if (state === "game") {
     gameScreen();
