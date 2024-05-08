@@ -16,6 +16,7 @@ function preload() {
   character3 = loadImage("images/character3.png");
   character4 = loadImage("images/character4.png");
   character5 = loadImage("images/character5.png");
+  playerImg = loadImage("images/gameplayer.png");
 }
 
 function startButton() {
@@ -48,21 +49,43 @@ function mouseClicked() {
   }
 }
 
+let changeDirection;
 //functions for icons and characters
 let x = 600;
 function hiLife() {
   image(hilifeImg, x, 50, 70, 140);
 
-  /*   if (x < 830) {
-    x = x + 2;
-  } else {
-    x = x - 2;
-  } */
+  if (x > 830) {
+    changeDirection = true;
+  } else if (x <= 600) {
+    changeDirection = false;
+  }
 
-  if (x < 830) {
+  if (changeDirection == false) {
     x = x + 2;
-  } else if (x > 830) {
+  } else if (changeDirection == true) {
     x = x - 2;
+  }
+}
+
+//function player() {
+//image(playerImg, 950, 300, 40, 80);
+//if (keyIsPressed) {
+//if (keyCode === UP_ARROW) {
+//}
+// }
+//}
+function keyPressed() {
+  image(playerImg, 950, 300, 40, 80);
+  if (keyCode === UP_ARROW) {
+    y = y - 10;
+  } else if (keyCode === DOWN_ARROW) {
+    y = y + 10;
+  }
+  if (keyCode === LEFT_ARROW) {
+    x = x - 5;
+  } else if (keyCode === RIGHT_ARROW) {
+    x = x + 5;
   }
 }
 
@@ -78,6 +101,12 @@ function gameScreen() {
     image(akaImg, 0, 0);
     // image(hilifeImg, 600, 50, 70, 140);
     hiLife();
+    player();
+    image(character2, 200, 100, 40, 80);
+    image(character3, 700, 280, 40, 80);
+    image(character4, 500, 250, 40, 80);
+    image(character5, 100, 300, 40, 80);
+    image(playerImg, 950, 300, 40, 80);
     gameIsRunning = true;
   }
 }
