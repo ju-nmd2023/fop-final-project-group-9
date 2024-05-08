@@ -78,6 +78,7 @@ function gameScreen() {
     image(akaImg, 0, 0);
     // image(hilifeImg, 600, 50, 70, 140);
     hiLife();
+    gameIsRunning = true;
   }
 }
 
