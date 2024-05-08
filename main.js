@@ -17,6 +17,7 @@ function startScreen() {
 
 function gameScreen() {
   if (state === "game") {
+    gameIsRunning = true;
   }
 }
 
