@@ -53,16 +53,11 @@ let x = 600;
 function hiLife() {
   image(hilifeImg, x, 50, 70, 140);
 
-  /*   if (x < 830) {
-    x = x + 2;
-  } else {
-    x = x - 2;
-  } */
-
-  if (x < 830) {
-    x = x + 2;
-  } else if (x > 830) {
-    x = x - 2;
+  if (x <= 830) {
+    x += 2;
+  }
+  if (x >= 830) {
+    x -= 2;
   }
 }
 
