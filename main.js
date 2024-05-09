@@ -49,43 +49,53 @@ function mouseClicked() {
   }
 }
 
-let changeDirection;
-//functions for icons and characters
-let x = 600;
-function hiLife() {
-  image(hilifeImg, x, 50, 70, 140);
-
-  if (x > 830) {
-    changeDirection = true;
-  } else if (x <= 600) {
-    changeDirection = false;
+class Hilife {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
   }
-
-  if (changeDirection == false) {
-    x = x + 2;
-  } else if (changeDirection == true) {
-    x = x - 2;
+  draw() {
+    image(hilifeImg, this.x, this.y, 70, 140);
   }
 }
 
-//function player() {
-//image(playerImg, 950, 300, 40, 80);
-//if (keyIsPressed) {
-//if (keyCode === UP_ARROW) {
-//}
-// }
-//}
-function keyPressed() {
+let hilife = new Hilife(600, 60);
+let changeDirection;
+
+class Player {
+  constructor(x, y) {}
+}
+
+/* function draw() {
+  clear();
+  hilife.draw();
+  hilife.x += 1;
+} */
+
+//functions for icons and characters
+//let x = 400;
+/* function hiLife() {
+  image(hilifeImg, x, 50, 70, 140);
+
+  changeDirection = true;
+
+    if (hilife.x <= 600) {
+      changeDirection = false;
+    }
+  
+    if (changeDirection == false) {
+      hilife.x = hilife.x + 2;
+    } else if (changeDirection == true) {
+      hilife.x = hilife.x - 2;
+    } 
+
+ */
+
+function player() {
   image(playerImg, 950, 300, 40, 80);
-  if (keyCode === UP_ARROW) {
-    y = y - 10;
-  } else if (keyCode === DOWN_ARROW) {
-    y = y + 10;
-  }
-  if (keyCode === LEFT_ARROW) {
-    x = x - 5;
-  } else if (keyCode === RIGHT_ARROW) {
-    x = x + 5;
+  if (keyIsPressed) {
+    if (keyCode === UP_ARROW) {
+    }
   }
 }
 
@@ -100,7 +110,6 @@ function gameScreen() {
   if (state === "game") {
     image(akaImg, 0, 0);
     // image(hilifeImg, 600, 50, 70, 140);
-    hiLife();
     player();
     image(character2, 200, 100, 40, 80);
     image(character3, 700, 280, 40, 80);
@@ -129,6 +138,20 @@ function draw() {
     startButton();
   } else if (state === "game") {
     gameScreen();
+    hilife.draw();
+    hilife.x += 2;
+    if (hilife.x === 600) {
+      changeDirection = false;
+    } else if (hilife.x === 800) {
+      changeDirection = true;
+    } else if (changeDirection == false) {
+      hilife.x = hilife.x + 2;
+    } else if (changeDirection == true) {
+      hilife.x = hilife.x - 2;
+    }
+    // if (hilife.x > 830) {
+    // hilife.x = -1;
+    // }
   } else if (state === "lose") {
     loseScreen();
   } else if (state === "win") {
