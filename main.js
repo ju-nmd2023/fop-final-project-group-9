@@ -51,6 +51,7 @@ function mouseClicked() {
   }
 }
 
+//class for hi life character
 class Hilife {
   constructor(x, y) {
     this.x = x;
@@ -64,9 +65,18 @@ class Hilife {
 let hilife = new Hilife(600, 60);
 let changeDirection;
 
+//class for player character
 class Player {
-  constructor(x, y) {}
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+  draw() {
+    image(playerImg, this.x, this.y, 40, 80);
+  }
 }
+
+let player = new Player(930, 190);
 
 /* function draw() {
   clear();
@@ -93,13 +103,13 @@ class Player {
 
  */
 
-function player() {
+/* function player() {
   image(playerImg, 950, 300, 40, 80);
   if (keyIsPressed) {
     if (keyCode === UP_ARROW) {
     }
   }
-}
+} */
 
 //screens
 function startScreen() {
@@ -112,12 +122,11 @@ function gameScreen() {
   if (state === "game") {
     image(akaImg, 0, 0);
     // image(hilifeImg, 600, 50, 70, 140);
-    player();
     image(character2, 200, 100, 40, 80);
     image(character3, 700, 280, 40, 80);
     image(character4, 500, 250, 40, 80);
     image(character5, 100, 300, 40, 80);
-    image(playerImg, 950, 300, 40, 80);
+    //image(playerImg, 950, 300, 40, 80);
     gameIsRunning = true;
   }
 }
@@ -134,12 +143,14 @@ function winScreen() {
   }
 }
 
+//----FUNCTION DRAW
 function draw() {
   if (state === "start") {
     startScreen();
     startButton();
   } else if (state === "game") {
     gameScreen();
+    //functions for hilife
     hilife.draw();
     hilife.x += 2;
     if (hilife.x === 600) {
@@ -154,6 +165,32 @@ function draw() {
     // if (hilife.x > 830) {
     // hilife.x = -1;
     // }
+    //functions for player character
+    player.draw();
+
+    if (keyIsDown(38)) {
+      player.y = player.y - 5;
+    }
+    //key code 40= arrow down
+    //if arrow down is pressed, the car will move backwards
+    else if (keyIsDown(40)) {
+      player.y = player.y + 5;
+    }
+    // if the condition is not true it will stand still
+    else {
+      speed = 0;
+    }
+
+    //add rotation
+    //37= höger pil
+    if (keyIsDown(37)) {
+      player.x = player.x - 5;
+    }
+    //39 = vänster pil
+    else if (keyIsDown(39)) {
+      player.x = player.x + 5;
+    }
+    //game states
   } else if (state === "lose") {
     loseScreen();
   } else if (state === "win") {
