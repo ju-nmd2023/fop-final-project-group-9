@@ -80,14 +80,10 @@ class Hilife {
 let hilife = new Hilife(600, 60);
 let changeDirection;
 
-//class for player character
 class Player {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-  }
-  draw() {
-    image(playerImg, this.x, this.y, 40, 80);
   }
 }
 
@@ -160,13 +156,13 @@ let patch = new Patch(600, 450);
 
  */
 
-/* function player() {
+function player() {
   image(playerImg, 950, 300, 40, 80);
   if (keyIsPressed) {
     if (keyCode === UP_ARROW) {
     }
   }
-} */
+}
 
 //screens
 function startScreen() {
@@ -179,11 +175,12 @@ function gameScreen() {
   if (state === "game") {
     image(akaImg, 0, 0);
     // image(hilifeImg, 600, 50, 70, 140);
+    player();
     image(character2, 200, 100, 40, 80);
     image(character3, 700, 280, 40, 80);
     image(character4, 500, 250, 40, 80);
     image(character5, 100, 300, 40, 80);
-    //image(playerImg, 950, 300, 40, 80);
+    image(playerImg, 950, 300, 40, 80);
     gameIsRunning = true;
   }
 }
@@ -200,7 +197,6 @@ function winScreen() {
   }
 }
 
-//----FUNCTION DRAW
 function draw() {
   if (state === "start") {
     startScreen();
