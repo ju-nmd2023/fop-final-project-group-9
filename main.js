@@ -5,6 +5,18 @@ function setup() {
 let state = "start";
 let gameIsRunning = false;
 
+let imageArray = [];
+
+let donkImg = loadImage("images/donk.png");
+let patchImg = loadImage("images/girllife.png");
+let shotImg = loadImage("images/shot.png");
+let simbaImg = loadImage("images/simba.png");
+
+imageArray.push(donkImg);
+imageArray.push(patchImg);
+imageArray.push(shotImg);
+imageArray.push(simbaImg);
+
 function preload() {
   //all images
   startImg = loadImage("images/startscreenn.jpg");
@@ -17,6 +29,10 @@ function preload() {
   character4 = loadImage("images/character4.png");
   character5 = loadImage("images/character5.png");
   playerImg = loadImage("images/gameplayer.png");
+  /* donkImg = loadImage("images/donk.png");
+  patchImg = loadImage("images/girllife.png");
+  shotImg = loadImage("images/shot.png");
+  simbaImg = loadImage("images/simba.png"); */
 }
 
 function startButton() {
@@ -49,6 +65,7 @@ function mouseClicked() {
   }
 }
 
+//-----CLASSES
 //class for hi life character
 class Hilife {
   constructor(x, y) {
@@ -76,11 +93,53 @@ class Player {
 
 let player = new Player(930, 190);
 
-/* function draw() {
-  clear();
-  hilife.draw();
-  hilife.x += 1;
-} */
+//class for donk
+class Donk {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+  draw() {
+    image(donkImg, this.x, this.y, 40, 60);
+  }
+}
+let donk = new Donk(755, 10);
+
+//Clas  for simba
+class Simba {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+  draw() {
+    image(simbaImg, this.x, this.y, 30, 70);
+  }
+}
+let simba = new Simba(200, 300);
+
+//class for shot
+class Shot {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+  draw() {
+    image(shotImg, this.x, this.y, 30, 40);
+  }
+}
+let shot = new Shot(300, 150);
+
+//class for patch
+class Patch {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+  draw() {
+    image(patchImg, this.x, this.y, 40, 40);
+  }
+}
+let patch = new Patch(600, 450);
 
 //functions for icons and characters
 //let x = 400;
@@ -148,6 +207,14 @@ function draw() {
     startButton();
   } else if (state === "game") {
     gameScreen();
+    //functions for patch
+    patch.draw();
+    //functions for donk
+    donk.draw();
+    //functions for simba
+    simba.draw();
+    //functions for shot
+    shot.draw();
     //functions for hilife
     hilife.draw();
     hilife.x += 2;
@@ -165,29 +232,51 @@ function draw() {
     // }
     //functions for player character
     player.draw();
+    let velocity = 5;
 
-    if (keyIsDown(38)) {
-      player.y = player.y - 5;
+    //upper key
+    if (keyIsDown(38) && player.y - velocity >= 0) {
+      player.y -= velocity;
     }
+    /*  if (keyIsDown(38)) {
+      player.y = player.y - velocity;
+    } */
     //key code 40= arrow down
     //if arrow down is pressed, the car will move backwards
-    else if (keyIsDown(40)) {
-      player.y = player.y + 5;
+    else if (keyIsDown(40) && player.y - velocity <= 800) {
+      player.y += velocity;
     }
+
+    //right
+    else if (keyIsDown(37) && player.x - velocity <= 1000) {
+      player.x -= velocity;
+    }
+
+    //left
+    else if (keyIsDown(39) && player.x - velocity <= 1000) {
+      player.x += velocity;
+    }
+
+    /* else if (keyIsDown(40)) {
+      player.y = player.y + velocity;
+    } */
     // if the condition is not true it will stand still
-    else {
-      speed = 0;
-    }
+    /*  else if (player.x <= 100 && player.y <= 300) {
+      
+    } else if (player.x > 970) {
+      player.x = 970;
+    } else if (player.y < 100) {
+    } */
 
     //add rotation
     //37= höger pil
-    if (keyIsDown(37)) {
+    /* if (keyIsDown(37)) {
       player.x = player.x - 5;
     }
     //39 = vänster pil
     else if (keyIsDown(39)) {
       player.x = player.x + 5;
-    }
+    } */
     //game states
   } else if (state === "lose") {
     loseScreen();
