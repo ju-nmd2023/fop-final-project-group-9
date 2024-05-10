@@ -5,9 +5,9 @@ function setup() {
 let state = "start";
 let gameIsRunning = false;
 
-let imageArray = [];
+//let imageArray = [];
 
-let donkImg = loadImage("images/donk.png");
+/* let donkImg = loadImage("images/donk.png");
 let patchImg = loadImage("images/girllife.png");
 let shotImg = loadImage("images/shot.png");
 let simbaImg = loadImage("images/simba.png");
@@ -15,7 +15,7 @@ let simbaImg = loadImage("images/simba.png");
 imageArray.push(donkImg);
 imageArray.push(patchImg);
 imageArray.push(shotImg);
-imageArray.push(simbaImg);
+imageArray.push(simbaImg); */
 
 function preload() {
   //all images
@@ -29,10 +29,10 @@ function preload() {
   character4 = loadImage("images/character4.png");
   character5 = loadImage("images/character5.png");
   playerImg = loadImage("images/gameplayer.png");
-  /* donkImg = loadImage("images/donk.png");
+  donkImg = loadImage("images/donk.png");
   patchImg = loadImage("images/girllife.png");
   shotImg = loadImage("images/shot.png");
-  simbaImg = loadImage("images/simba.png"); */
+  simbaImg = loadImage("images/simba.png");
 }
 
 function startButton() {
@@ -84,6 +84,9 @@ class Player {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+  }
+  draw() {
+    image(playerImg, this.x, this.y, 40, 80);
   }
 }
 
@@ -156,13 +159,13 @@ let patch = new Patch(600, 450);
 
  */
 
-function player() {
+/* function player() {
   image(playerImg, 950, 300, 40, 80);
   if (keyIsPressed) {
     if (keyCode === UP_ARROW) {
     }
   }
-}
+} */
 
 //screens
 function startScreen() {
@@ -175,12 +178,11 @@ function gameScreen() {
   if (state === "game") {
     image(akaImg, 0, 0);
     // image(hilifeImg, 600, 50, 70, 140);
-    player();
     image(character2, 200, 100, 40, 80);
     image(character3, 700, 280, 40, 80);
     image(character4, 500, 250, 40, 80);
     image(character5, 100, 300, 40, 80);
-    image(playerImg, 950, 300, 40, 80);
+    /* image(playerImg, 950, 300, 40, 80); */
     gameIsRunning = true;
   }
 }
