@@ -17,6 +17,8 @@ function preload() {
   character4 = loadImage("images/character4.png");
   character5 = loadImage("images/character5.png");
   playerImg = loadImage("images/gameplayer.png");
+  shotImg = loadImage("images/shot.png");
+  drinkImg = loadImage("images/simba.png");
 }
 
 function startButton() {
