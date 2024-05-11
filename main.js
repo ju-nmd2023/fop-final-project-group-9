@@ -241,7 +241,7 @@ function draw() {
     } */
     //key code 40= arrow down
     //if arrow down is pressed, the car will move backwards
-    else if (keyIsDown(40) && player.y - velocity <= 800) {
+    else if (keyIsDown(40) && player.y + velocity <= 800) {
       player.y += velocity;
     }
 
@@ -251,7 +251,7 @@ function draw() {
     }
 
     //left
-    else if (keyIsDown(39) && player.x - velocity <= 1000) {
+    else if (keyIsDown(39) && player.x + velocity <= 1000) {
       player.x += velocity;
     }
 
