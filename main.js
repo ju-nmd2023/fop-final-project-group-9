@@ -1,12 +1,47 @@
 function setup() {
   createCanvas(1000, 800);
+
+  simbas.push(new Simba(500, 150));
+  simbas.push(new Simba(200, 300));
+  simbas.push(new Simba(700, 400));
 }
 
 let state = "start";
 let gameIsRunning = false;
 
-//let imageArray = [];
+let objects = [];
 
+//timer
+//line 9-17, this code was conducted from shecodes.io, 14th may 2024
+// let timerIsRunning = false;
+let count = 60;
+
+function countDown() {
+  const timer = setInterval(function () {
+    count--;
+    console.log(count);
+    if (count === 0) {
+      clearInterval(timer);
+      console.log("Time is up");
+    }
+  }, 1000);
+
+  if (count > 0) {
+    text(count, width / 2, height / 2);
+    textSize(40);
+  } else if (count === 0) {
+    text("Game Over", width / 2, height / 2);
+  }
+}
+
+gameIsRunning = true;
+
+function preload() {
+  objects[0] = loadImage("images/donk.png");
+  objects[1] = loadImage("images/girllife.png");
+  objects[2] = loadImage("images/shot.png");
+  objects[3] = loadImage("images/simba.png");
+}
 /* let donkImg = loadImage("images/donk.png");
 let patchImg = loadImage("images/girllife.png");
 let shotImg = loadImage("images/shot.png");
@@ -104,6 +139,7 @@ class Donk {
 }
 let donk = new Donk(755, 10);
 
+let simbas = [];
 //Clas  for simba
 class Simba {
   constructor(x, y) {
@@ -183,7 +219,7 @@ function gameScreen() {
     image(character4, 500, 250, 40, 80);
     image(character5, 100, 300, 40, 80);
     /* image(playerImg, 950, 300, 40, 80); */
-    gameIsRunning = true;
+    countDown();
   }
 }
 
@@ -205,12 +241,22 @@ function draw() {
     startButton();
   } else if (state === "game") {
     gameScreen();
+    /*  if (count > 0) {
+      text(count, width / 2, height / 2);
+      textSize(40);
+    } else {
+      text("Game Over", width / 2, height / 2);
+    } */
+
     //functions for patch
     patch.draw();
     //functions for donk
     donk.draw();
     //functions for simba
-    simba.draw();
+    for (let simba of simbas) {
+      simba.draw();
+    }
+
     //functions for shot
     shot.draw();
     //functions for hilife
@@ -241,7 +287,7 @@ function draw() {
     } */
     //key code 40= arrow down
     //if arrow down is pressed, the car will move backwards
-    else if (keyIsDown(40) && player.y + velocity <= 800) {
+    else if (keyIsDown(40) && player.y - velocity <= 800) {
       player.y += velocity;
     }
 
@@ -251,7 +297,7 @@ function draw() {
     }
 
     //left
-    else if (keyIsDown(39) && player.x + velocity <= 1000) {
+    else if (keyIsDown(39) && player.x - velocity <= 1000) {
       player.x += velocity;
     }
 
