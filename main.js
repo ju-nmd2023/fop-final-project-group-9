@@ -1,5 +1,6 @@
 function setup() {
   createCanvas(1000, 800);
+  frameRate(30);
 
   simbas.push(new Simba(500, 150));
   simbas.push(new Simba(200, 300));
@@ -8,8 +9,8 @@ function setup() {
 
   shots.push(new Shot(300, 150));
   shots.push(new Shot(120, 50));
-  shots.push(new Shot(100, 450));
-  shots.push(new Shot(900, 430));
+  shots.push(new Shot(300, 450));
+  shots.push(new Shot(900, 290));
 
   patches.push(new Patch(350, 300));
   patches.push(new Patch(610, 100));
@@ -18,7 +19,6 @@ function setup() {
 
 let state = "start";
 let gameIsRunning = false;
-
 let objects = [];
 
 //timer
@@ -26,8 +26,7 @@ let objects = [];
 // let timerIsRunning = false;
 
 let count = 60;
-
-gameIsRunning = true;
+let countStarted = false;
 
 function preload() {
   objects[0] = loadImage("images/donk.png");
@@ -35,15 +34,6 @@ function preload() {
   objects[2] = loadImage("images/shot.png");
   objects[3] = loadImage("images/simba.png");
 }
-/* let donkImg = loadImage("images/donk.png");
-let patchImg = loadImage("images/girllife.png");
-let shotImg = loadImage("images/shot.png");
-let simbaImg = loadImage("images/simba.png");
-
-imageArray.push(donkImg);
-imageArray.push(patchImg);
-imageArray.push(shotImg);
-imageArray.push(simbaImg); */
 
 function preload() {
   //all images
@@ -173,30 +163,6 @@ let patch = new Patch();
 
 //functions for icons and characters
 //let x = 400;
-/* function hiLife() {
-  image(hilifeImg, x, 50, 70, 140);
-
-  changeDirection = true;
-
-    if (hilife.x <= 600) {
-      changeDirection = false;
-    }
-  
-    if (changeDirection == false) {
-      hilife.x = hilife.x + 2;
-    } else if (changeDirection == true) {
-      hilife.x = hilife.x - 2;
-    } 
-
- */
-
-/* function player() {
-  image(playerImg, 950, 300, 40, 80);
-  if (keyIsPressed) {
-    if (keyCode === UP_ARROW) {
-    }
-  }
-} */
 
 //screens
 function startScreen() {
@@ -206,24 +172,11 @@ function startScreen() {
 }
 
 function gameScreen() {
-  function countDown() {
-    //const timer = setInterval(function () {
-    count--;
-    console.log(count);
-    // if (count === 0) {
-    //   clearInterval(timer);
-    //   console.log("Time is up");
-    // }
-    //}, 1000);
-
-    // if (count > 0) {
-    //   text(count, width / 2, height / 2);
-    //   textSize(40);
-    // } else if (count === 0) {
-    //   text("Game Over", width / 2, height / 2);
-    // }
-  }
   if (state === "game") {
+    countStarted = false;
+    if (countStarted === true) {
+      startCountDown();
+    }
     image(akaImg, 0, 0);
     // image(hilifeImg, 600, 50, 70, 140);
     image(character2, 200, 100, 40, 80);
@@ -231,7 +184,13 @@ function gameScreen() {
     image(character4, 500, 250, 40, 80);
     image(character5, 100, 300, 40, 80);
     /* image(playerImg, 950, 300, 40, 80); */
-    setInterval(countDown, 1000);
+  }
+}
+function startCountDown() {
+  countStarted = false;
+  setInterval(timer, 1000);
+  function timer() {
+    // console.log("hello");
   }
 }
 
@@ -247,18 +206,24 @@ function winScreen() {
   }
 }
 
+let frames = 0;
 function draw() {
   if (state === "start") {
     startScreen();
     startButton();
   } else if (state === "game") {
+    frames++;
+    if (frames >= 30) {
+      count--;
+      frames = 0;
+    }
     gameScreen();
-    /*  if (count > 0) {
-      text(count, width / 2, height / 2);
+    if (count > 0) {
+      text(count, 75, 480);
       textSize(40);
     } else {
       text("Game Over", width / 2, height / 2);
-    } */
+    }
 
     //functions for patch
     //functions for donk
@@ -289,9 +254,7 @@ function draw() {
     } else if (changeDirection == true) {
       hilife.x = hilife.x - 2;
     }
-    // if (hilife.x > 830) {
-    // hilife.x = -1;
-    // }
+
     //functions for player character
     player.draw();
     let velocity = 5;
@@ -300,45 +263,21 @@ function draw() {
     if (keyIsDown(38) && player.y - velocity >= 0) {
       player.y -= velocity;
     }
-    /*  if (keyIsDown(38)) {
-      player.y = player.y - velocity;
-    } */
     //key code 40= arrow down
     //if arrow down is pressed, the car will move backwards
-    else if (keyIsDown(40) && player.y - velocity <= 800) {
+    else if (keyIsDown(40) && player.y + velocity <= 480) {
       player.y += velocity;
     }
 
     //right
-    else if (keyIsDown(37) && player.x - velocity <= 1000) {
+    else if (keyIsDown(37) && player.x - velocity >= 0) {
       player.x -= velocity;
     }
 
     //left
-    else if (keyIsDown(39) && player.x - velocity <= 1000) {
+    else if (keyIsDown(39) && player.x + velocity <= 970) {
       player.x += velocity;
     }
-
-    /* else if (keyIsDown(40)) {
-      player.y = player.y + velocity;
-    } */
-    // if the condition is not true it will stand still
-    /*  else if (player.x <= 100 && player.y <= 300) {
-      
-    } else if (player.x > 970) {
-      player.x = 970;
-    } else if (player.y < 100) {
-    } */
-
-    //add rotation
-    //37= höger pil
-    /* if (keyIsDown(37)) {
-      player.x = player.x - 5;
-    }
-    //39 = vänster pil
-    else if (keyIsDown(39)) {
-      player.x = player.x + 5;
-    } */
     //game states
   } else if (state === "lose") {
     loseScreen();
