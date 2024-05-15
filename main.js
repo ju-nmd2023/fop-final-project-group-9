@@ -346,3 +346,4 @@ function draw() {
     winScreen();
   }
 }
+hej;
