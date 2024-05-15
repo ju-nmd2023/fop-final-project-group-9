@@ -20,7 +20,7 @@ function countDown() {
   const timer = setInterval(function () {
     count--;
     console.log(count);
-    if (count === 0) {
+    if ((count === 0, 0)) {
       clearInterval(timer);
       console.log("Time is up");
     }
