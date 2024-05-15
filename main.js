@@ -24,25 +24,8 @@ let objects = [];
 //timer
 //line 9-17, this code was conducted from shecodes.io, 14th may 2024
 // let timerIsRunning = false;
+
 let count = 60;
-
-function countDown() {
-  const timer = setInterval(function () {
-    count--;
-    console.log(count);
-    if ((count === 0, 0)) {
-      clearInterval(timer);
-      console.log("Time is up");
-    }
-  }, 1000);
-
-  if (count > 0) {
-    text(count, width / 2, height / 2);
-    textSize(40);
-  } else if (count === 0) {
-    text("Game Over", width / 2, height / 2);
-  }
-}
 
 gameIsRunning = true;
 
@@ -223,6 +206,23 @@ function startScreen() {
 }
 
 function gameScreen() {
+  function countDown() {
+    //const timer = setInterval(function () {
+    count--;
+    console.log(count);
+    // if (count === 0) {
+    //   clearInterval(timer);
+    //   console.log("Time is up");
+    // }
+    //}, 1000);
+
+    // if (count > 0) {
+    //   text(count, width / 2, height / 2);
+    //   textSize(40);
+    // } else if (count === 0) {
+    //   text("Game Over", width / 2, height / 2);
+    // }
+  }
   if (state === "game") {
     image(akaImg, 0, 0);
     // image(hilifeImg, 600, 50, 70, 140);
@@ -231,7 +231,7 @@ function gameScreen() {
     image(character4, 500, 250, 40, 80);
     image(character5, 100, 300, 40, 80);
     /* image(playerImg, 950, 300, 40, 80); */
-    countDown();
+    setInterval(countDown, 1000);
   }
 }
 
