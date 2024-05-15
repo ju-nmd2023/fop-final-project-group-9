@@ -4,16 +4,6 @@ function setup() {
   simbas.push(new Simba(500, 150));
   simbas.push(new Simba(200, 300));
   simbas.push(new Simba(700, 400));
-  simbas.push(new Simba(350, 400));
-
-  shots.push(new Shot(300, 150));
-  shots.push(new Shot(120, 50));
-  shots.push(new Shot(100, 450));
-  shots.push(new Shot(900, 430));
-
-  patches.push(new Patch(350, 300));
-  patches.push(new Patch(610, 100));
-  patches.push(new Patch(600, 450));
 }
 
 let state = "start";
@@ -43,6 +33,8 @@ function countDown() {
     text("Game Over", width / 2, height / 2);
   }
 }
+
+
 
 gameIsRunning = true;
 
@@ -160,9 +152,8 @@ class Simba {
     image(simbaImg, this.x, this.y, 30, 70);
   }
 }
-let simba = new Simba();
+let simba = new Simba(200, 300);
 
-let shots = [];
 //class for shot
 class Shot {
   constructor(x, y) {
@@ -173,9 +164,8 @@ class Shot {
     image(shotImg, this.x, this.y, 30, 40);
   }
 }
-let shot = new Shot();
+let shot = new Shot(300, 150);
 
-let patches = [];
 //class for patch
 class Patch {
   constructor(x, y) {
@@ -186,7 +176,7 @@ class Patch {
     image(patchImg, this.x, this.y, 40, 40);
   }
 }
-let patch = new Patch();
+let patch = new Patch(600, 450);
 
 //functions for icons and characters
 //let x = 400;
@@ -261,6 +251,7 @@ function draw() {
     } */
 
     //functions for patch
+    patch.draw();
     //functions for donk
     donk.draw();
     //functions for simba
@@ -268,15 +259,8 @@ function draw() {
       simba.draw();
     }
 
-    for (let shot of shots) {
-      shot.draw();
-    }
-
-    for (let patch of patches) {
-      patch.draw();
-    }
-
     //functions for shot
+    shot.draw();
     //functions for hilife
     hilife.draw();
     hilife.x += 2;
