@@ -22,8 +22,6 @@ let gameIsRunning = false;
 let objects = [];
 
 //timer
-//line 9-17, this code was conducted from shecodes.io, 14th may 2024
-// let timerIsRunning = false;
 
 let count = 60;
 let countStarted = false;
@@ -39,7 +37,7 @@ function preload() {
   //all images
   startImg = loadImage("images/startscreenn.jpg");
   akaImg = loadImage("images/akascreen.jpg");
-  loseImg = loadImage("images/youlosescrenn.jpg");
+  loseImg = loadImage("images/youlosescreenn.jpg");
   winImg = loadImage("images/winscreen.png");
   hilifeImg = loadImage("images/hilife.png");
   character2 = loadImage("images/character2.png");
@@ -68,6 +66,52 @@ function startButton() {
   pop();
 }
 
+function retryButton() {
+  push();
+  let x = 200;
+  let y = 70;
+
+  fill(0);
+  stroke(247, 247, 5);
+  strokeWeight(5);
+  rect(410, 350, x, y);
+  textSize(20);
+  text("Retry", 480, 390);
+
+  pop();
+}
+
+function startAgainButton() {
+  push();
+  let x = 200;
+  let y = 70;
+
+  fill(0);
+  stroke(247, 247, 5);
+  strokeWeight(5);
+  rect(410, 350, x, y);
+  textSize(20);
+  text("Start Again", 480, 390);
+
+  pop();
+}
+
+function timerBox() {
+  push();
+  noStroke();
+  fill(255, 190, 25);
+  circle(80, 480, 130);
+  pop();
+}
+
+function pointBox() {
+  push();
+  noStroke();
+  fill(0);
+  circle(920, 480, 130);
+  pop();
+}
+
 function mouseClicked() {
   if (state === "start") {
     if (
@@ -77,8 +121,18 @@ function mouseClicked() {
       mouseY < 350 + 70
     ) {
       state = "game";
-      // if (mouseX > 400 && mouseX < 600 && mouseY > 200 && mouseY < 400) {
-      //state = "game";
+    }
+  }
+
+  //retrybutton
+  if (state === "lose") {
+    if (
+      mouseX > 410 &&
+      mouseX < 410 + 200 &&
+      mouseY > 350 &&
+      mouseY < 350 + 70
+    ) {
+      state = "game";
     }
   }
 }
@@ -102,9 +156,11 @@ class Player {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+    this.width = 40;
+    this.height = 80;
   }
   draw() {
-    image(playerImg, this.x, this.y, 40, 80);
+    image(playerImg, this.x, this.y, this.width, this.height);
   }
 }
 
@@ -145,6 +201,7 @@ class Shot {
   draw() {
     image(shotImg, this.x, this.y, 30, 40);
   }
+  //hitTest(x,y)
 }
 let shot = new Shot();
 
@@ -173,7 +230,7 @@ function startScreen() {
 
 function gameScreen() {
   if (state === "game") {
-    countStarted = false;
+    //countStarted = false;
     if (countStarted === true) {
       startCountDown();
     }
@@ -189,20 +246,20 @@ function gameScreen() {
 function startCountDown() {
   countStarted = false;
   setInterval(timer, 1000);
-  function timer() {
-    // console.log("hello");
-  }
+  function timer() {}
 }
 
 function loseScreen() {
   if (state === "lose") {
     image(loseImg, 0, 0);
+    retryButton();
   }
 }
 
 function winScreen() {
   if (state === "win") {
     image(winImg, 0, 0);
+    startAgainButton();
   }
 }
 
@@ -218,11 +275,13 @@ function draw() {
       frames = 0;
     }
     gameScreen();
+    timerBox();
+    pointBox();
     if (count > 0) {
-      text(count, 75, 480);
-      textSize(40);
+      text(count, 55, 495);
+      textSize(50);
     } else {
-      text("Game Over", width / 2, height / 2);
+      state = "lose";
     }
 
     //functions for patch
@@ -235,6 +294,17 @@ function draw() {
 
     for (let shot of shots) {
       shot.draw();
+      console.log(player.x + " " + shot.x);
+
+      if (
+        player.x + player.width >= shot.x &&
+        player.x <= shot.x &&
+        player.y + player.height >= shot.y &&
+        player.y <= shot.y
+      ) {
+        shots.splice(shots.indexOf(shot), 1);
+        console.log(shots);
+      }
     }
 
     for (let patch of patches) {
@@ -278,6 +348,12 @@ function draw() {
     else if (keyIsDown(39) && player.x + velocity <= 970) {
       player.x += velocity;
     }
+
+    // let bar =
+    // if (player.x < 100) {
+    //   player.x += velocity;
+    // }
+
     //game states
   } else if (state === "lose") {
     loseScreen();
