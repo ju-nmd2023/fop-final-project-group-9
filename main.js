@@ -143,9 +143,11 @@ class Hilife {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+    this.width = 70;
+    this.height = 140;
   }
   draw() {
-    image(hilifeImg, this.x, this.y, 70, 140);
+    image(hilifeImg, this.x, this.y, this.width, this.height);
   }
 }
 
@@ -171,9 +173,11 @@ class Donk {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+    this.width = 40;
+    this.height = 60;
   }
   draw() {
-    image(donkImg, this.x, this.y, 40, 60);
+    image(donkImg, this.x, this.y, this.width, this.height);
   }
 }
 let donk = new Donk(755, 10);
@@ -184,6 +188,8 @@ class Simba {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+    this.width = 30;
+    this.height = 70;
   }
   draw() {
     image(simbaImg, this.x, this.y, 30, 70);
@@ -197,9 +203,11 @@ class Shot {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+    this.width = 30;
+    this.height = 40;
   }
   draw() {
-    image(shotImg, this.x, this.y, 30, 40);
+    image(shotImg, this.x, this.y, this.width, this.height);
   }
   //hitTest(x,y)
 }
@@ -211,9 +219,11 @@ class Patch {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+    this.width = 40;
+    this.height = 40;
   }
   draw() {
-    image(patchImg, this.x, this.y, 40, 40);
+    image(patchImg, this.x, this.y, this.width, this.height);
   }
 }
 let patch = new Patch();
@@ -290,12 +300,18 @@ function draw() {
     //functions for simba
     for (let simba of simbas) {
       simba.draw();
+      if (
+        player.x + player.width >= simba.x &&
+        player.x <= simba.x &&
+        player.y + player.height >= simba.y &&
+        player.y <= simba.y
+      ) {
+        simbas.splice(simbas.indexOf(simba), 1);
+      }
     }
 
     for (let shot of shots) {
       shot.draw();
-      console.log(player.x + " " + shot.x);
-
       if (
         player.x + player.width >= shot.x &&
         player.x <= shot.x &&
@@ -303,12 +319,19 @@ function draw() {
         player.y <= shot.y
       ) {
         shots.splice(shots.indexOf(shot), 1);
-        console.log(shots);
       }
     }
 
     for (let patch of patches) {
       patch.draw();
+      if (
+        player.x + player.width >= patch.x &&
+        player.x <= patch.x &&
+        player.y + player.height >= patch.y &&
+        player.y <= patch.y
+      ) {
+        patches.splice(patches.indexOf(patch), 1);
+      }
     }
 
     //functions for shot
