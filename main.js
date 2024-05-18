@@ -168,6 +168,23 @@ class Player {
 
 let player = new Player(930, 190);
 
+//class for transparent bar
+class Bar {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.width = 98;
+    this.height = 290;
+  }
+  draw() {
+    rect(this.x, this.y, this.width, this.height);
+    noFill();
+    stroke(0);
+    strokeWeight(2);
+  }
+}
+let bar = new Bar(0, 0);
+
 //class for donk
 class Donk {
   constructor(x, y) {
@@ -294,7 +311,18 @@ function draw() {
       state = "lose";
     }
 
-    //functions for patch
+    //functions for bar
+
+    bar.draw();
+    if (
+      player.x + player.width === bar.x &&
+      player.x <= bar.x &&
+      player.y + player.height >= bar.y &&
+      player.y <= bar.y
+    ) {
+      console.log("Hello game");
+    }
+
     //functions for donk
     donk.draw();
     //functions for simba
@@ -310,6 +338,7 @@ function draw() {
       }
     }
 
+    //functions for shots
     for (let shot of shots) {
       shot.draw();
       if (
@@ -321,7 +350,7 @@ function draw() {
         shots.splice(shots.indexOf(shot), 1);
       }
     }
-
+    //functions for pathes
     for (let patch of patches) {
       patch.draw();
       if (
@@ -334,7 +363,6 @@ function draw() {
       }
     }
 
-    //functions for shot
     //functions for hilife
     hilife.draw();
     hilife.x += 2;
