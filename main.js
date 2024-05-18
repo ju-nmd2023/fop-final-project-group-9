@@ -15,6 +15,8 @@ function setup() {
   patches.push(new Patch(350, 300));
   patches.push(new Patch(610, 100));
   patches.push(new Patch(600, 450));
+
+  donks.push(new Donk(755, 10));
 }
 
 let state = "start";
@@ -23,7 +25,7 @@ let objects = [];
 
 //timer
 
-let count = 60;
+let count = 30;
 let countStarted = false;
 
 function preload() {
@@ -112,6 +114,13 @@ function pointBox() {
   pop();
 }
 
+function points() {
+  push();
+  fill(255, 255, 255);
+  text(currentPoint, 900, 495);
+  pop();
+}
+
 function mouseClicked() {
   if (state === "start") {
     if (
@@ -133,9 +142,12 @@ function mouseClicked() {
       mouseY < 350 + 70
     ) {
       state = "game";
+      count = 30;
     }
   }
 }
+
+let currentPoint = 0;
 
 //-----CLASSES
 //class for hi life character
@@ -180,7 +192,9 @@ class Donk {
     image(donkImg, this.x, this.y, this.width, this.height);
   }
 }
-let donk = new Donk(755, 10);
+let donk = new Donk();
+
+let donks = [];
 
 let simbas = [];
 //Clas  for simba
@@ -287,6 +301,7 @@ function draw() {
     gameScreen();
     timerBox();
     pointBox();
+    points(0);
     if (count > 0) {
       text(count, 55, 495);
       textSize(50);
@@ -296,7 +311,20 @@ function draw() {
 
     //functions for patch
     //functions for donk
-    donk.draw();
+    for (donk of donks) {
+      donk.draw();
+      if (
+        player.x + player.width >= donk.x &&
+        player.x <= donk.x &&
+        player.y + player.height >= donk.y &&
+        player.y <= donk.y
+      ) {
+        donks.splice(donks.indexOf(simba), 1);
+        currentPoint += 50;
+        points();
+      }
+    }
+
     //functions for simba
     for (let simba of simbas) {
       simba.draw();
@@ -307,6 +335,8 @@ function draw() {
         player.y <= simba.y
       ) {
         simbas.splice(simbas.indexOf(simba), 1);
+        currentPoint += 20;
+        points();
       }
     }
 
@@ -319,6 +349,8 @@ function draw() {
         player.y <= shot.y
       ) {
         shots.splice(shots.indexOf(shot), 1);
+        currentPoint += 10;
+        points();
       }
     }
 
@@ -331,21 +363,31 @@ function draw() {
         player.y <= patch.y
       ) {
         patches.splice(patches.indexOf(patch), 1);
+        currentPoint += 15;
+        points();
       }
     }
 
     //functions for shot
     //functions for hilife
     hilife.draw();
-    hilife.x += 2;
+    if (changeDirection === false && hilife.x === 600) {
+      hilife.x += 2;
+    }
+
     if (hilife.x === 600) {
+      console.log("textchange4");
       changeDirection = false;
     } else if (hilife.x === 800) {
+      console.log("textchange3");
       changeDirection = true;
-    } else if (changeDirection == false) {
-      hilife.x = hilife.x + 2;
-    } else if (changeDirection == true) {
       hilife.x = hilife.x - 2;
+    } else if (changeDirection === false) {
+      hilife.x = hilife.x + 2;
+      console.log("textchange");
+    } else if (changeDirection === true) {
+      hilife.x = hilife.x - 2;
+      console.log("textchange2");
     }
 
     //functions for player character
