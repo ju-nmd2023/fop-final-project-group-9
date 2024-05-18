@@ -116,7 +116,7 @@ function pointBox() {
 
 function points() {
   push();
-  fill(255, 255, 255);
+  fill(255, 190, 25);
   text(currentPoint, 900, 495);
   pop();
 }
