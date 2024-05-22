@@ -19,21 +19,25 @@ function setup() {
   donks.push(new Donk(755, 10));
 }
 
+//----VARIABLES
 let state = "start";
 let gameIsRunning = false;
-let objects = [];
 
-//timer
+//player character
+let velocity = 5;
 
+//hilife character
+let changeDirection;
+
+//timer at start
 let count = 30;
 let countStarted = false;
+let frames = 0;
 
-function preload() {
-  objects[0] = loadImage("images/donk.png");
-  objects[1] = loadImage("images/girllife.png");
-  objects[2] = loadImage("images/shot.png");
-  objects[3] = loadImage("images/simba.png");
-}
+//points at start
+let currentPoint = 0;
+
+//----end of variables
 
 function preload() {
   //all images
@@ -53,6 +57,7 @@ function preload() {
   simbaImg = loadImage("images/simba.png");
 }
 
+//------FUNCTIONS
 function startButton() {
   push();
   let x = 200;
@@ -98,6 +103,7 @@ function startAgainButton() {
   pop();
 }
 
+//timer
 function timerBox() {
   push();
   noStroke();
@@ -105,6 +111,13 @@ function timerBox() {
   circle(80, 480, 130);
   pop();
 }
+
+function startCountDown() {
+  countStarted = false;
+  setInterval(timer, 1000);
+  function timer() {}
+}
+// end of timer
 
 function pointBox() {
   push();
@@ -196,7 +209,7 @@ function mouseClicked() {
   }
 }
 
-let currentPoint = 0;
+//----End of functions
 
 //-----CLASSES
 //class for hi life character
@@ -204,8 +217,8 @@ class Hilife {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.width = 70;
-    this.height = 140;
+    this.width = 60;
+    this.height = 120;
   }
   draw() {
     image(hilifeImg, this.x, this.y, this.width, this.height);
@@ -213,8 +226,8 @@ class Hilife {
 }
 
 let hilife = new Hilife(600, 60);
-let changeDirection;
 
+//class for Player
 class Player {
   constructor(x, y) {
     this.x = x;
@@ -234,11 +247,11 @@ let player = new Player(playerX, playerY);
 
 //class for transparent bar
 class Bar {
-  constructor(x, y) {
+  constructor(x, y, width, height) {
     this.x = x;
     this.y = y;
-    this.width = 98;
-    this.height = 290;
+    this.width = width;
+    this.height = height;
   }
   draw() {
     rect(this.x, this.y, this.width, this.height);
@@ -247,7 +260,7 @@ class Bar {
     strokeWeight(2);
   }
 }
-let bar = new Bar(0, 0);
+let bar = new Bar(0, 0, 98, 290);
 
 //class for donk
 class Donk {
@@ -263,10 +276,7 @@ class Donk {
 }
 let donk = new Donk();
 
-let donks = [];
-
-let simbas = [];
-//Clas  for simba
+//class  for simba
 class Simba {
   constructor(x, y) {
     this.x = x;
@@ -280,7 +290,6 @@ class Simba {
 }
 let simba = new Simba();
 
-let shots = [];
 //class for shot
 class Shot {
   constructor(x, y) {
@@ -292,11 +301,9 @@ class Shot {
   draw() {
     image(shotImg, this.x, this.y, this.width, this.height);
   }
-  //hitTest(x,y)
 }
 let shot = new Shot();
 
-let patches = [];
 //class for patch
 class Patch {
   constructor(x, y) {
@@ -311,10 +318,13 @@ class Patch {
 }
 let patch = new Patch();
 
-//functions for icons and characters
-//let x = 400;
+// empty arrays for objects
+let donks = [];
+let simbas = [];
+let shots = [];
+let patches = [];
 
-//screens
+//-----SCREEN FUNCTIONS
 function startScreen() {
   if (state === "start") {
     image(startImg, 0, 0);
@@ -323,23 +333,15 @@ function startScreen() {
 
 function gameScreen() {
   if (state === "game") {
-    //countStarted = false;
     if (countStarted === true) {
       startCountDown();
     }
     image(akaImg, 0, 0);
-    // image(hilifeImg, 600, 50, 70, 140);
     image(character2, 200, 100, 40, 80);
     image(character3, 700, 280, 40, 80);
     image(character4, 500, 250, 40, 80);
     image(character5, 100, 300, 40, 80);
-    /* image(playerImg, 950, 300, 40, 80); */
   }
-}
-function startCountDown() {
-  countStarted = false;
-  setInterval(timer, 1000);
-  function timer() {}
 }
 
 function loseScreen() {
@@ -357,12 +359,13 @@ function winScreen() {
   }
 }
 
-let frames = 0;
+//----FUNCTION DRAW
 function draw() {
   if (state === "start") {
     startScreen();
     startButton();
   } else if (state === "game") {
+    //timer logic
     frames++;
     if (frames >= 30) {
       count--;
@@ -372,6 +375,7 @@ function draw() {
     timerBox();
     pointBox();
     points(0);
+    //timer logic
     if (count > 0) {
       text(count, 55, 495);
       textSize(50);
@@ -380,15 +384,14 @@ function draw() {
     }
 
     //functions for bar
-
-    bar.draw();
+    bar.draw(bar.x, bar.y, bar.width, bar.height);
     if (
-      player.x + player.width === bar.x &&
-      player.x <= bar.x &&
+      player.x + player.width >= bar.x &&
+      player.x <= bar.x + bar.width &&
       player.y + player.height >= bar.y &&
-      player.y <= bar.y
+      player.y <= bar.y + bar.height
     ) {
-      console.log("Hello game");
+      player.x += velocity;
     }
 
     //functions for donk
@@ -435,7 +438,8 @@ function draw() {
         points();
       }
     }
-    //functions for pathes
+
+    //functions for patches
     for (let patch of patches) {
       patch.draw();
       if (
@@ -457,10 +461,10 @@ function draw() {
       player.y + player.height >= hilife.y &&
       player.y <= hilife.y
     ) {
-      state === "lose";
+      state = "lose";
     }
 
-    //functions for hilife
+    //hilife movement
     hilife.draw();
     if (changeDirection === false && hilife.x === 600) {
       hilife.x += 2;
@@ -477,40 +481,32 @@ function draw() {
       hilife.x = hilife.x - 2;
     }
 
-    //functions for player character
+    //player movement
     player.draw();
-    let velocity = 5;
 
-    //upper key
+    //arrow up = 38
     if (keyIsDown(38) && player.y - velocity >= 0) {
       player.y -= velocity;
     }
-    //key code 40= arrow down
-    //if arrow down is pressed, the car will move backwards
+    //arrow down = 40
     else if (keyIsDown(40) && player.y + velocity <= 480) {
       player.y += velocity;
     }
 
-    //right
+    //arrow right = 37
     else if (keyIsDown(37) && player.x - velocity >= 0) {
       player.x -= velocity;
     }
 
-    //left
+    //arrow left = 39
     else if (keyIsDown(39) && player.x + velocity <= 970) {
       player.x += velocity;
     }
 
+    //winning at 200 points
     if (currentPoint >= 200) {
       state = "win";
     }
-
-    // let bar =
-    // if (player.x < 100) {
-    //   player.x += velocity;
-    // }
-
-    //game states
   } else if (state === "lose") {
     loseScreen();
   } else if (state === "win") {
