@@ -481,6 +481,11 @@ function draw() {
       hilife.x = hilife.x - 2;
     }
 
+    /*line 493-509 was created 08-05-2024 with help from chat gpt. We pasted 
+    already existing code and asked what was wrong and why the movement 
+    didn't work, we then had to alter and modify that code again in order 
+    to make the character move with arrow keys.*/
+
     //player movement
     player.draw();
 
