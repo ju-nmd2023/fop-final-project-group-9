@@ -93,7 +93,7 @@ function startAgainButton() {
   strokeWeight(5);
   rect(410, 350, x, y);
   textSize(20);
-  text("Start Again", 480, 390);
+  text("Start Again", 460, 390);
 
   pop();
 }
@@ -143,6 +143,55 @@ function mouseClicked() {
     ) {
       state = "game";
       count = 30;
+      currentPoint = 0;
+      player.x = playerX;
+      player.y = playerY;
+      simbas.push(new Simba(500, 150));
+      simbas.push(new Simba(200, 300));
+      simbas.push(new Simba(700, 400));
+      simbas.push(new Simba(350, 400));
+
+      shots.push(new Shot(300, 150));
+      shots.push(new Shot(120, 50));
+      shots.push(new Shot(300, 450));
+      shots.push(new Shot(900, 290));
+
+      patches.push(new Patch(350, 300));
+      patches.push(new Patch(610, 100));
+      patches.push(new Patch(600, 450));
+
+      donks.push(new Donk(755, 10));
+    }
+  }
+
+  //startagain button
+  if (state === "win") {
+    if (
+      mouseX > 410 &&
+      mouseX < 410 + 200 &&
+      mouseY > 350 &&
+      mouseY < 350 + 70
+    ) {
+      state = "game";
+      count = 30;
+      currentPoint = 0;
+      player.x = playerX;
+      player.y = playerY;
+      simbas.push(new Simba(500, 150));
+      simbas.push(new Simba(200, 300));
+      simbas.push(new Simba(700, 400));
+      simbas.push(new Simba(350, 400));
+
+      shots.push(new Shot(300, 150));
+      shots.push(new Shot(120, 50));
+      shots.push(new Shot(300, 450));
+      shots.push(new Shot(900, 290));
+
+      patches.push(new Patch(350, 300));
+      patches.push(new Patch(610, 100));
+      patches.push(new Patch(600, 450));
+
+      donks.push(new Donk(755, 10));
     }
   }
 }
@@ -178,7 +227,10 @@ class Player {
   }
 }
 
-let player = new Player(930, 190);
+let playerX = 930;
+let playerY = 190;
+
+let player = new Player(playerX, playerY);
 
 //class for transparent bar
 class Bar {
@@ -301,6 +353,7 @@ function winScreen() {
   if (state === "win") {
     image(winImg, 0, 0);
     startAgainButton();
+    image(playerImg, 100, 200, 150, 280);
   }
 }
 
@@ -392,9 +445,19 @@ function draw() {
         player.y <= patch.y
       ) {
         patches.splice(patches.indexOf(patch), 1);
-        currentPoint += 15;
+        currentPoint += 10;
         points();
       }
+    }
+
+    //hilife collision
+    if (
+      player.x + player.width >= hilife.x &&
+      player.x <= hilife.x &&
+      player.y + player.height >= hilife.y &&
+      player.y <= hilife.y
+    ) {
+      state === "lose";
     }
 
     //functions for hilife
@@ -404,18 +467,14 @@ function draw() {
     }
 
     if (hilife.x === 600) {
-      console.log("textchange4");
       changeDirection = false;
     } else if (hilife.x === 800) {
-      console.log("textchange3");
       changeDirection = true;
       hilife.x = hilife.x - 2;
     } else if (changeDirection === false) {
       hilife.x = hilife.x + 2;
-      console.log("textchange");
     } else if (changeDirection === true) {
       hilife.x = hilife.x - 2;
-      console.log("textchange2");
     }
 
     //functions for player character
@@ -440,6 +499,10 @@ function draw() {
     //left
     else if (keyIsDown(39) && player.x + velocity <= 970) {
       player.x += velocity;
+    }
+
+    if (currentPoint >= 200) {
+      state = "win";
     }
 
     // let bar =
