@@ -1,5 +1,5 @@
 function setup() {
-  createCanvas(1000, 800);
+  createCanvas(1000, 650);
   frameRate(30);
 
   simbas.push(new Simba(500, 150));
